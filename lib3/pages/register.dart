@@ -16,20 +16,23 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPassController = TextEditingController();
 
   void signUp() async {
-    final authProviderService = Provider.of<AuthProviderService>(context, listen: false);
+    final authProviderService =
+        Provider.of<AuthProviderService>(context, listen: false);
 
     if (passController.text != confirmPassController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password do not match")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Password do not match")));
+      return;
     }
 
     try {
       await authProviderService.signUpProvider(
-          emailController.text,
-          passController.text,
+        emailController.text,
+        passController.text,
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid")));
-
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Invalid")));
     }
   }
 
@@ -41,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Column(
               children: [
                 TextField(
@@ -77,7 +79,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 TextField(
                   obscureText: true,
                   controller: passController,
@@ -111,9 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
                 TextField(
                   obscureText: true,
                   controller: confirmPassController,
@@ -147,12 +146,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
-
             const SizedBox(height: 20),
-
             GestureDetector(
               onTap: signUp,
               child: Container(
@@ -162,18 +158,25 @@ class _RegisterPageState extends State<RegisterPage> {
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.blue,
                 ),
-                child: const Center(child: Text("Login", style: TextStyle(color: Colors.white),)),
+                child: const Center(
+                    child: Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white),
+                )),
               ),
             ),
             const SizedBox(height: 10),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Already an account? "),
                 GestureDetector(
                   onTap: widget.onTap,
-                  child: const Text("Login Now", style: TextStyle(fontWeight: FontWeight.bold),),),
+                  child: const Text(
+                    "Login Now",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ],

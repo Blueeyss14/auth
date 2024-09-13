@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
           future: FirebaseFirestore.instance.collection('users').get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading...");
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Text("Error: ${snapshot.error}");
@@ -35,7 +35,8 @@ class HomePage extends StatelessWidget {
                 return ListTile(
                   title: Text(user['email'] ?? "No Name"),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(receiverId: user['email'] ?? "No Name",),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        ChatPage(receiverId: user['userId'] ?? "No Name",),));
                   },
                 );
               },

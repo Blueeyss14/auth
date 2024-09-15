@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intern_test_pr/styles/color_style.dart';
 import '../auth/auth.dart';
+import 'login_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final String token;
@@ -12,15 +13,11 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: ColorStyle.blueColor,
-        title: const Text("User"),
-      ),
       body: FutureBuilder(
           future: FakeAuth.fetchUserData(token),
           builder: (context, snapshot) {
            if (snapshot.connectionState == ConnectionState.waiting) {
-             return const Center(child: CircularProgressIndicator());
+             return Center(child: CircularProgressIndicator(color: ColorStyle.whiteColor,));
            }
            if (snapshot.hasError) {
              return Center(child: Text('Error: ${snapshot.error}'));
@@ -29,7 +26,6 @@ class ProfilePage extends StatelessWidget {
              return const Center(child: Text('No Data'));
            }
            final userData = snapshot.data as Map<String, dynamic>;
-           final username = userData['username'] ?? '';
            final email = userData['email'] ?? '';
            final fullName = (userData['firstName'] ?? '') + ' ' + (userData['lastName'] ?? '');
            final gender = userData['gender'] ?? '';
@@ -39,124 +35,113 @@ class ProfilePage extends StatelessWidget {
            return Stack(
              fit: StackFit.expand,
              children: [
-               Image.asset(
-                 'asset/images/image1.jpg',
-                 fit: BoxFit.cover,
-               ),
+               Image.asset('asset/images/image3.jpg', fit: BoxFit.cover),
                BackdropFilter(
-                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                  child: Container(
-                   color: Colors.black.withOpacity(0.5),
+                   color: Colors.black.withOpacity(0.4),
                  ),
                ),
-               Column(
-                 children: [
-                   Container(
-                     width: MediaQuery.of(context).size.width,
-                     height: MediaQuery.of(context).size.height / 2 - 150,
-                     color: Colors.transparent,
-                     child: Stack(
-                       children: [
-                         Column(
-                           children: [
-                             Flexible(
-                               child: Container(
-                                 decoration: const BoxDecoration(
-                                   borderRadius: BorderRadius.only(
-                                     bottomRight: Radius.circular(150),
-                                     bottomLeft: Radius.circular(150),
-                                   ),
-                                   color: Colors.transparent,
-                                 ),
-                               ),
-                             ),
-                             Flexible(
-                                 child: Container(
-                                   decoration: BoxDecoration(
-                                     borderRadius: const BorderRadius.only(
-                                       topRight: Radius.circular(40),
-                                       topLeft: Radius.circular(40),
-                                     ),
-                                     color: ColorStyle.blueColor
-                                   ),
-                                 ),
-                             ),
-                           ],
-                         ),
-                         Column(
-                           mainAxisAlignment: MainAxisAlignment.end,
-                           children: [
-                             Center(child: Text("$username", style: TextStyle(fontSize: 30, color: ColorStyle.whiteColor))),
-                           ],
-                         ),
-                         Center(
-                             child: Container(
-                               width: 200,
-                               height: 200,
-                               decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(100),
-                                 color: Colors.blue,
-                               ),
-                               child:  Image.network(image, fit: BoxFit.cover),
-                             ),
-                         ),
-                       ],
-                     ),
-                   ),
 
-                   Flexible(
+               Column(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   BackdropFilter(
+                     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                      child: Container(
-                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                       width: double.infinity,
-                       color: ColorStyle.blueColor,
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           const SizedBox(height: 20),
-                           ///fullName
-                           Row(
-                             children: [
-                               Icon(Icons.person, color: ColorStyle.whiteColor),
-                               const SizedBox(width: 20),
-                               Text("$fullName", style: TextStyle(color: ColorStyle.whiteColor),),
-                             ],
-                           ),
-                           Divider(color: ColorStyle.whiteColor),
-                           const SizedBox(height: 10),
-                           ///email
-                           Row(
-                             children: [
-                               Icon(Icons.email, color: ColorStyle.whiteColor),
-                               const SizedBox(width: 20),
-                               Text("$email", style: TextStyle(color: ColorStyle.whiteColor),),
-                             ],
-                           ),
-                           Divider(color: ColorStyle.whiteColor),
-                           const SizedBox(height: 10),
-                           ///gender
-                           Row(
-                             children: [
-                               Icon(Icons.female, color: ColorStyle.whiteColor),
-                               const SizedBox(width: 20),
-                               Text("$gender", style: TextStyle(color: ColorStyle.whiteColor),),
-                             ],
-                           ),
-                           Divider(color: ColorStyle.whiteColor),
-                           const SizedBox(height: 10),
-                           ///age
-                           Row(
-                             children: [
-                               Icon(Icons.numbers, color: ColorStyle.whiteColor),
-                               const SizedBox(width: 20),
-                               Text("$age", style: TextStyle(color: ColorStyle.whiteColor),),
-                             ],
-                           ),
-                           Divider(color: ColorStyle.whiteColor),
-                         ],
+                       padding: const EdgeInsets.symmetric(horizontal: 10),
+                       margin: const EdgeInsets.symmetric(horizontal: 30),
+                       height: MediaQuery.of(context).size.height / 2 - 150,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(30),
+                         color: Colors.white.withOpacity(0.2),
+                         border: Border.all(
+                           color: Colors.white.withOpacity(0.2),
+                           width: 1,
+                         ),
+                       ),
+                       child: Padding(
+                         padding: const EdgeInsets.symmetric(horizontal: 20),
+                         child: ListView(
+                           children: [
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Container(
+                                   height: 30,
+                                   width: 40,
+                                   decoration: const BoxDecoration(
+                                     shape: BoxShape.circle,
+                                     color: Colors.yellow,
+                                   ),
+                                   child: Image.network(image, fit: BoxFit.cover),
+                                 ),
+                               ],
+                             ),
+                             const SizedBox(height: 20),
+                             Row(
+                               children: [
+                                 Icon(Icons.person, color: ColorStyle.whiteColor, size: 20),
+                                 const SizedBox(width: 20),
+                                 Text("$fullName", style: TextStyle(color: ColorStyle.whiteColor),),
+                               ],
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 10),
+                               child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                             ),
+                             ///email
+                             Row(
+                               children: [
+                                 Icon(Icons.email, color: ColorStyle.whiteColor, size: 20),
+                                 const SizedBox(width: 20),
+                                 Text("$email", style: TextStyle(color: ColorStyle.whiteColor),),
+                               ],
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 10),
+                               child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                             ),
+                             ///gender
+                             Row(
+                               children: [
+                                 Icon(Icons.female, color: ColorStyle.whiteColor, size: 20),
+                                 const SizedBox(width: 20),
+                                 Text("$gender", style: TextStyle(color: ColorStyle.whiteColor),),
+                               ],
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 10),
+                               child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                             ),
+                             ///age
+                             Row(
+                               children: [
+                                 Icon(Icons.numbers, color: ColorStyle.whiteColor, size: 20),
+                                 const SizedBox(width: 20),
+                                 Text("$age", style: TextStyle(color: ColorStyle.whiteColor),),
+                               ],
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 10),
+                               child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                             ),
+                           ],
+                         ),
                        ),
                      ),
                    ),
+                   const SizedBox(height: 30),
                  ],
+               ),
+               SafeArea(
+                 child: Align(
+                   alignment: Alignment.topLeft,
+                     child: IconButton(onPressed: () {
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                     }, icon: Icon(Icons.arrow_back, color: ColorStyle.whiteColor),
+                     )
+                 ),
                ),
              ],
            );

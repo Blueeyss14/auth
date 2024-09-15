@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intern_test_pr/model/ui_model.dart';
 import 'package:intern_test_pr/pages/profile.dart';
 import 'package:intern_test_pr/styles/color_style.dart';
 import '../url/dummy_url.dart';
@@ -18,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passController = TextEditingController();
   bool isLoading = false;
   bool isObscureText = false;
+
+  final List<UiModel> uiModel = UiModel.dataUiModel();
 
   void _togglePassword() {
     setState(() {
@@ -73,116 +76,169 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorStyle.darkBlueColor,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'asset/images/image1.jpg',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('asset/images/image3.jpg', fit: BoxFit.cover),
+          
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.4),
             ),
           ),
+
           Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                 child: Container(
-                  alignment : Alignment.bottomCenter,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 420,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF3E4269),
-                          Color(0xFF549BAD),
-                        ],
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft
-                    )
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  height: MediaQuery.of(context).size.height / 2 - 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white.withOpacity(0.2),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.2),
+                      width: 1,
+                    ),
                   ),
                   child: ListView(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Column(
-                          children: [
-                            TextField(
-                              controller: emailController,
-                              style: TextStyle(color: ColorStyle.whiteColor),
-                              cursorColor: ColorStyle.whiteColor,
-                              decoration: InputDecoration(
-                                hoverColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                prefixIcon: const Icon(Icons.person),
-                                prefixIconColor: ColorStyle.whiteColor,
-                                hintText: "Username",
-                                hintStyle: TextStyle(color: ColorStyle.whiteColor, fontWeight: FontWeight.normal),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Divider(height: 1),
-                            ),
-                            const SizedBox(height: 20),
-                            TextField(
-                              obscureText: isObscureText ? false : true,
-                              style: TextStyle(color: ColorStyle.whiteColor),
-                              cursorColor: ColorStyle.whiteColor,
-                              controller: passController,
-                              decoration: InputDecoration(
-                                hoverColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                prefixIcon: const Icon(Icons.key),
-                                prefixIconColor: ColorStyle.whiteColor,
-                                suffixIcon: IconButton(
-                                    onPressed: _togglePassword,
-                                    icon: isObscureText ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off)
-                                ),
-                                suffixIconColor: ColorStyle.whiteColor,
-                                hintText: "Password",
-                                contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                                hintStyle: TextStyle(color: ColorStyle.whiteColor, fontWeight: FontWeight.normal),
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Divider(height: 1),
-                            ),
 
-                            const SizedBox(height: 20),
-                            GestureDetector(
-                              onTap: _login,
-                              child: Container(
-                                height: 45,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: ColorStyle.whiteColor,
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: Center(child: Text("Login", style: TextStyle(color: Colors.grey[10]),)),
-                              ),
+                    children: [
+                      const SizedBox(height: 25),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextField(
+                            controller: emailController,
+                            style: TextStyle(color: ColorStyle.whiteColor),
+                            cursorColor: ColorStyle.whiteColor,
+                            decoration: InputDecoration(
+                              hoverColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              prefixIcon: const Icon(Icons.person, size: 20),
+                              prefixIconColor: ColorStyle.whiteColor,
+                              hintText: "Username",
+                              hintStyle: TextStyle(color: ColorStyle.whiteColor, fontWeight: FontWeight.normal),
+                              contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                          ),
+                          TextField(
+                            obscureText: isObscureText ? false : true,
+                            style: TextStyle(color: ColorStyle.whiteColor),
+                            cursorColor: ColorStyle.whiteColor,
+                            controller: passController,
+                            decoration: InputDecoration(
+                              hoverColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              prefixIcon: const Icon(Icons.key, size: 20),
+                              prefixIconColor: ColorStyle.whiteColor,
+                              suffixIcon: IconButton(
+                                  onPressed: _togglePassword,
+                                  icon: isObscureText ? Icon(Icons.visibility, size: 20, color: ColorStyle.whiteColor,)
+                                      : Icon(Icons.visibility_off, size: 20, color: ColorStyle.whiteColor)
+                              ),
+                              suffixIconColor: ColorStyle.whiteColor,
+                              hintText: "Password",
+                              contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                              hintStyle: TextStyle(color: ColorStyle.whiteColor, fontWeight: FontWeight.normal),
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Divider(height: 0.8, color: Colors.white.withOpacity(0.5)),
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              for (int i = 0; i < uiModel.length; i++)
+                              uiModel[i].logo,
+                            ],
+                          )
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
+
+
+
+              const SizedBox(height: 30),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: _login,
+                        child: Container(
+                          height: 45,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorStyle.whiteColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 0.2,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: Center(child: Text("Login to Play", style: TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.black.withOpacity(0.7), fontSize: 18),)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      height: 45,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorStyle.whiteColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 0.2,
+                            offset: const Offset(2, 2),
+                          ),
+                        ],
+                      ),
+                      child: Icon(Icons.question_mark, color: Colors.black.withOpacity(0.7),),
+                    ),
+
+                  ],
+                ),
+              )
             ],
           ),
-            if (isLoading)
-              const Center(child: CircularProgressIndicator(),),
+          if (isLoading)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: ColorStyle.whiteColor,
+              ),
+            ],
+          ),
         ],
       ),
     );

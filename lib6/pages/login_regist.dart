@@ -1,5 +1,3 @@
-//login & regist
-
 import 'package:flutter/material.dart';
 import 'package:login_regist_test/pages/login.dart';
 import 'package:login_regist_test/pages/regist.dart';
@@ -13,6 +11,7 @@ class LoginRegist extends StatefulWidget {
 
 class _LoginRegistState extends State<LoginRegist> {
   bool toggleSwitch = true;
+
 
   void toggles() {
     setState(() {

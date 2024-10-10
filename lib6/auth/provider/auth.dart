@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:login_regist_test/home/home.dart';
 import 'package:login_regist_test/pages/login_regist.dart';
 
-class Auth extends StatelessWidget {
-  const Auth({super.key});
+class AuthCheck extends StatelessWidget {
+  const AuthCheck({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,7 @@ class Auth extends StatelessWidget {
             } else {
               return const LoginRegist();
             }
-          },
-      ),
+          },),
     );
   }
 }

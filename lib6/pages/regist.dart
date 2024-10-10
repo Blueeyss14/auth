@@ -16,20 +16,19 @@ class _RegistPageState extends State<RegistPage> {
   final TextEditingController confirmPassController = TextEditingController();
 
   void signUp() async {
-    final authService = Provider.of<AuthServices>(context, listen: false);
+    final authService = Provider.of<AuthServiceP>(context, listen: false);
 
-    if (passController.text == confirmPassController.text) {
-      try {
-        await authService.signUpAcc(emailController.text, passController.text);
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid")));
+      if (passController.text == confirmPassController.text) {
+        try {
+          await authService.signUpMe(emailController.text, passController.text);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid")));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password do not match")));
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password do not match")));
-
-    }
-
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_regist_test/auth/provider/auth_services.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +16,9 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passController = TextEditingController();
 
   void signIn() async {
-    final authService = Provider.of<AuthServices>(context, listen: false);
-
+    final authService = Provider.of<AuthServiceP>(context, listen: false);
     try {
-      await authService.signInAcc(
-          emailController.text,
-          passController.text);
+      await authService.signInMe(emailController.text, passController.text);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid")));
     }

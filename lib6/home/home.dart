@@ -1,6 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_regist_test/auth/provider/auth_services.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,13 +8,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () async {
-          final authService = Provider.of<AuthServices>(context, listen: false);
-          await authService.logOut();
+        leading: IconButton(onPressed: () {
+          FirebaseAuth.instance.signOut();
         }, icon: const Icon(Icons.logout)),
       ),
-      body: const Center(
-        child: Text("Login Successful"),
+      body: Center(
+        child: Text("Hello World"),
       ),
     );
   }

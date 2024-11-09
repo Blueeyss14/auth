@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class UserList {
-  String firstName, lastName, email;
+class UserLst {
+  String category, description;
 
-  UserList(this.firstName, this.lastName, this.email);
+  UserLst(this.category, this.description);
 
-  static Future<List<UserList>> fetchData() async {
-    Uri url = Uri.parse("https://reqres.in/api/users?page=2");
+  static Future<List<UserLst>> fetchData() async {
+    Uri url = Uri.parse("https://fakestoreapi.com/products");
+
     var responseBody = await http.get(url);
-    var data = (json.decode(responseBody.body))["data"] as List;
+    var data = (json.decode(responseBody.body)) as List;
 
     return data
-        .map((data) =>
-            UserList(data['first_name'], data['last_name'], data['email']))
+        .map((data) => UserLst(data['category'], data['description']))
         .toList();
   }
 }

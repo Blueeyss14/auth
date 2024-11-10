@@ -1,9 +1,9 @@
 import 'package:fd/models/model.dart';
 
 void main() async {
-  final List<UserLst> user = await UserLst.fetchData();
+  final List<UserListP> userData = await UserListP.fetchDataP();
 
-  for (int i = 0; i < user.length; i++) {
-    print(user[i].category);
+  for (int i = 0; i < userData.length; ++i) {
+    print("${userData[i].category} ${userData[i].price}");
   }
 }
